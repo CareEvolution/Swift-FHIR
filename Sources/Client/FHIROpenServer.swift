@@ -27,11 +27,11 @@ open class FHIROpenServer: FHIRMinimalServer {
 	
 	// MARK: - Server Capability
 	
-	/// The server's cabability statement. Must be implicitly fetched using `getCapabilityStatement()`
-	public final internal(set) var cabability: CapabilityStatement? {
+	/// The server's capability statement. Must be implicitly fetched using `getCapabilityStatement()`
+	public final var capability: CapabilityStatement? {
 		didSet {
-			if let cabability = cabability {
-				didSetCapabilityStatement(cabability)
+			if let capability = capability {
+				didSetCapabilityStatement(capability)
 			}
 		}
 	}
@@ -69,7 +69,7 @@ open class FHIROpenServer: FHIRMinimalServer {
 	cabability statement.
 	*/
 	public final func getCapabilityStatement(_ callback: @escaping (_ error: FHIRError?) -> ()) {
-		if nil != cabability {
+        if nil != capability {
 			callback(nil)
 			return
 		}
@@ -77,7 +77,7 @@ open class FHIROpenServer: FHIRMinimalServer {
 		// not yet fetched, fetch it
 		CapabilityStatement.readFrom("metadata", server: self, options: [.summary, .lenient]) { resource, error in
 			if let conf = resource as? CapabilityStatement {
-				self.cabability = conf
+                self.capability = conf
 				callback(nil)
 			}
 			else {
