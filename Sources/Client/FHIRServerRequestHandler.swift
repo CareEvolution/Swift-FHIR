@@ -175,7 +175,7 @@ open class FHIRServerDataRequestHandler: FHIRServerRequestHandler {
 	
     public let contentType: String
 	
-	init(_ type: FHIRRequestMethod, contentType: String) {
+	public init(_ type: FHIRRequestMethod, contentType: String) {
 		self.contentType = contentType
 		super.init(type, resource: nil)
 	}

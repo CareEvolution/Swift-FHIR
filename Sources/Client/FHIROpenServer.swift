@@ -28,7 +28,7 @@ open class FHIROpenServer: FHIRServer {
 	public final let baseURL: URL
 	
 	/// The active URL session.
-	var session: URLSession?
+	public var session: URLSession?
 	
 	
 	/**
@@ -216,7 +216,7 @@ open class FHIROpenServer: FHIRServer {
 	Executes a `read` action against the server's "metadata" path, as returned from `conformancePath()`, which should return the Conformance
 	statement.
 	*/
-	final func getConformance(_ callback: @escaping (_ error: FHIRError?) -> ()) {
+	public final func getConformance(_ callback: @escaping (_ error: FHIRError?) -> ()) {
 		if nil != conformance {
 			callback(nil)
 			return
@@ -332,7 +332,7 @@ open class FHIROpenServer: FHIRServer {
 		return Foundation.URLSession.shared
 	}
 	
-	func abortSession() {
+	public func abortSession() {
 		if nil != session {
 			session!.invalidateAndCancel()
 			session = nil
