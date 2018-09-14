@@ -12,7 +12,7 @@ import Foundation
 /**
 A protocol for all our date and time structs.
 */
-protocol DateAndTime: CustomStringConvertible, Comparable, Equatable {
+protocol DateAndTime: CustomStringConvertible, Comparable {
 	
 	var nsDate: Date { get }
 }
@@ -710,7 +710,7 @@ class DateAndTimeParser {
 							tzStr += hourStr
 							var tzhour = 0
 							var tzmin = 0
-							if 2 == hourStr.characters.count {
+							if 2 == hourStr.count {
 								tzhour = Int(hourStr) ?? 0
 								if nil != scanner.fhir_scanString(":"), let tzm = scanner.fhir_scanInt() {
 									tzStr += (tzm < 10) ? ":0\(tzm)" : ":\(tzm)"
@@ -719,9 +719,9 @@ class DateAndTimeParser {
 									}
 								}
 							}
-							else if 4 == hourStr.characters.count {
-								tzhour = Int(hourStr.substring(to: hourStr.index(hourStr.startIndex, offsetBy: 2)))!
-								tzmin = Int(hourStr.substring(from: hourStr.index(hourStr.startIndex, offsetBy: 2)))!
+							else if 4 == hourStr.count {
+								tzhour = Int(hourStr[..<hourStr.index(hourStr.startIndex, offsetBy: 2)])!
+								tzmin = Int(hourStr[hourStr.index(hourStr.startIndex, offsetBy: 2)...])!
 							}
 							
 							let offset = tzhour * 3600 + tzmin * 60
@@ -812,7 +812,7 @@ extension Scanner {
 		#else
 		var str: NSString?
 		if scanString(searchString, into: &str) {
-			return str as? String
+            return str as String?
 		}
 		return nil
 		#endif
@@ -824,7 +824,7 @@ extension Scanner {
 		#else
 		var str: NSString?
 		if scanCharacters(from: set, into: &str) {
-			return str as? String
+            return str as String?
 		}
 		return nil
 		#endif
